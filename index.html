@@ -10,6 +10,18 @@
       height: calc(100vw * (7 / 5)); 
       width: 100%; 
     }
+    .info.legend {
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+    .info.legend i {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
@@ -127,10 +139,10 @@
     const legend = L.control({ position: 'bottomright' });
     legend.onAdd = function(map) {
       const div = L.DomUtil.create('div', 'info legend');
-      const departments = ["Urban Forestry/FireSmart", "Niche", "Planning", "GIS", "Innovations", "Prescriptions/Ops"];
-      const colors = ["red", "blue", "green", "purple", "orange", "yellow"];
+      div.style.backgroundColor = 'white'; // Set background color to white
+      const departments = Object.keys(departmentColors);
       for (let i = 0; i < departments.length; i++) {
-        div.innerHTML += `<i style="background: ${colors[i]}"></i> ${departments[i]}<br>`;
+        div.innerHTML += `<i style="background: ${departmentColors[departments[i]]}; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i>${departments[i]}<br>`;
       }
       return div;
     };
