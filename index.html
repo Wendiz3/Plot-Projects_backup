@@ -103,10 +103,20 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Define colors for each department
+    const departmentColors = {
+      "Urban Forestry/FireSmart": "red",
+      "Niche": "blue",
+      "Planning": "green",
+      "GIS": "purple",
+      "Innovations": "orange",
+      "Prescriptions/Ops": "yellow"
+    };
+
     // Add circle markers
     projects.forEach(client => {
       L.circleMarker([client.Latitude, client.Longitude], {
-        color: "black",
+        color: departmentColors[client.Department] || "black",
         radius: 5
       }).addTo(map)
       .bindPopup(`<b>Client:</b> ${client.Client}<br><b>Department:</b> ${client.Department}<br><b>Type:</b> ${client.Type}`)
@@ -118,7 +128,10 @@
     legend.onAdd = function(map) {
       const div = L.DomUtil.create('div', 'info legend');
       div.style.backgroundColor = 'white'; // Set background color to white
-      div.innerHTML += '<i style="background: black; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i>Client<br>';
+      const departments = Object.keys(departmentColors);
+      for (let i = 0; i < departments.length; i++) {
+        div.innerHTML += `<i style="background: ${departmentColors[departments[i]]}; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i>${departments[i]}<br>`;
+      }
       return div;
     };
     legend.addTo(map);
